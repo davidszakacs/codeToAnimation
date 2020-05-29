@@ -1,8 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Square } from './Square';
 import { CodeParser } from './CodeParser';
-import { ReadVarExpr, ThrowStmt } from '@angular/compiler';
-import { randomFill } from 'crypto';
+import { Grid } from './Grid';
 
 @Component({
   selector: 'app-draw',
@@ -58,8 +57,9 @@ export class DrawComponent implements OnInit {
       // drawing out the array squares
       for(var i = 0; i < item[1]; i++)
       {
-        squares[x][i] = new Square(this.ctx);
-        squares[x][i].draw(1+i*2, arrHeight, 35, 20);
+        squares[x][i] = new Square(this.ctx, i, x);
+        squares[x][i].draw(35, 20, 10, 50);
+        console.log(squares[x][i]);
       }
       this.ctx.font = "15px Arial";
       this.ctx.fillText(item[0], 20, arrHeight*32);
@@ -72,8 +72,8 @@ export class DrawComponent implements OnInit {
     let i: number = 0;
     variables.forEach(item => {
       this.ctx.fillStyle = 'blue';
-      squares[x][i] = new Square(this.ctx);
-      squares[x][i].draw(1+i*2, arrHeight, 35, 20);
+      squares[x][i] = new Square(this.ctx, i, x);
+      squares[x][i].draw(35, 20, 1, 10);
       this.ctx.font = "15px Arial";
       this.ctx.fillText(item, 20, arrHeight*32);
     });
@@ -88,6 +88,7 @@ export class DrawComponent implements OnInit {
   }
 
   public animate(): void {
+    let grid: Grid = new Grid([1100, 1100], 100, 100);
   }
 
 }

@@ -12,6 +12,7 @@ export class CodeParser {
         this.variables = new Array();
     }
 
+    // disassembles the code line by line
     public disassemble(): void {
         var lines = this.code.split("\n");
         lines.forEach(line => {
@@ -20,14 +21,14 @@ export class CodeParser {
                 var declaration = this.isDeclaration(line);
                 if(declaration[1] >= 0)
                 {
-                    console.log("a valtozo merete: "+declaration[1]+" | a neve: "+declaration[0]);
+                    console.log("variable size: "+declaration[1]+" | name: "+declaration[0]);
                     this.variables.push(declaration);
                 }
             }
         });
     }
 
-    // returns an array of all the declared arrays
+    // returns an array of all the declared arrays (name, size)
     public getArrays(): Array<[string, number]> {
         let arrays: Array<[string, number]> = new Array();
         this.variables.forEach(element => {
@@ -39,7 +40,7 @@ export class CodeParser {
         return arrays;
     }
 
-    // returns an array of all the declared variables
+    // returns an array of all the declared variables (name)
     public getVariables(): Array<string> {
         let variables: Array<string> = new Array();
         this.variables.forEach(element => {
@@ -56,7 +57,7 @@ export class CodeParser {
         return (!str || /^\s*$/.test(str));
     }
     
-    // if the line contains variable declarations
+    // returns array of variables if the line contains variable declarations (name, size)
     private isDeclaration(str: string): [string, number]
     {
         let size: number = -1, name: string = " ";

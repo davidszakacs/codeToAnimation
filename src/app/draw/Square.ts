@@ -1,8 +1,15 @@
 export class Square {
-    constructor(private ctx: CanvasRenderingContext2D) {}
 
-    draw(x: number, y: number, w: number, h: number) {
-      this.ctx.fillRect(h * x, w * y, h, w);
-      this.ctx.strokeRect(h * x, w * y, h, w);
-    }
+  private x: number;
+  private y: number;
+  constructor(private ctx: CanvasRenderingContext2D, x:number, y:number) {
+    this.x = x;
+    this.y = y;
+  }
+
+  draw(w: number, h: number, spacingX: number, spacingY: number) {
+    this.ctx.fillRect(h * this.x + spacingX, w * this.y + spacingY, h, w);
+    this.ctx.strokeRect(h * this.x + spacingX, w * this.y + spacingY, h, w);
+    console.log((h * this.x + spacingX) + " | " + (w * this.y + spacingY) + " | " +  h + " | " +  w);
+  }
 }
