@@ -48,11 +48,13 @@ export class DrawComponent implements OnInit {
     let arrHeight: number = 1;
     let x: number = 0;
 
-    // drawing each square onto the canvas
+    // making the square objects for each variable
     arrays.forEach(item => {
+      console.log("item: "+item);
       this.ctx.fillStyle = 'red';
       let temp: Array<Square> = new Array();
       squares.push(temp);
+      // drawing out the variable squares
       for(var i = 0; i < item[1]; i++)
       {
         squares[x][i] = new Square(this.ctx);

@@ -27,6 +27,7 @@ export class CodeParser {
         });
     }
 
+    // returns an array of all the declared arrays
     public getArrays(): Array<[string, number]> {
         let arrays: Array<[string, number]> = new Array();
         this.variables.forEach(element => {
@@ -38,18 +39,37 @@ export class CodeParser {
         return arrays;
     }
 
+    // returns an array of all the declared variables
+    public getVariables(): Array<string> {
+        let variables: Array<string> = new Array();
+        this.variables.forEach(element => {
+            if(element[1] == 0)
+            {
+                variables.push(element[0]);
+            }
+        });
+        return variables;
+    }
+
+    // true if line is empty
     private isBlank(str: string) {
         return (!str || /^\s*$/.test(str));
     }
     
+    // if the line contains variable declarations
     private isDeclaration(str: string): [string, number]
     {
         let size: number = -1, name: string = " ";
+        // for each possible variable type
         this.C_TYPES.forEach(type => {
+            // if is a variable declaration and not a function declaration
             if(str.includes(type+" ") && !str.includes('('))
             {
+                // where the name and array size(optional) begin
                 let nStart: number;
                 nStart = str.indexOf(type+" ")+type.length + 1;
+
+                // if it is an array
                 if(str.includes('[') && str.includes(']'))
                 {
                     let start, end: number;
@@ -63,6 +83,7 @@ export class CodeParser {
                         size += parseInt(str.charAt(i));
                     }
                 }
+                //if it is a simple variable
                 else
                 {
                     size = 0;
