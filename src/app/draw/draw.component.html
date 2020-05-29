@@ -1,0 +1,8 @@
+<canvas #canvas width="600" height="300"></canvas>
+<button (click)="animate()">Play</button>
+
+<div class="Block">
+    <label id="lbl">Code </label>
+    <input type='file' (change)="fileChanged($event)">
+</div>
+<button (click)="uploadDocument()">Upload</button>
