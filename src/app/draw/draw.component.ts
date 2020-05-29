@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Square } from './Square';
 import { CodeParser } from './CodeParser';
-import { ReadVarExpr } from '@angular/compiler';
+import { ReadVarExpr, ThrowStmt } from '@angular/compiler';
 import { randomFill } from 'crypto';
 
 @Component({
@@ -41,6 +41,7 @@ export class DrawComponent implements OnInit {
 
     // saving the parsed variables into a variable
     var arrays = this.parser.getArrays();
+    var variables = this.parser.getVariables();
 
     // making an array of squares that will be drawn
     let squares: Array<Square[]>;
@@ -48,13 +49,13 @@ export class DrawComponent implements OnInit {
     let arrHeight: number = 1;
     let x: number = 0;
 
-    // making the square objects for each variable
+    // making the square objects for each array
     arrays.forEach(item => {
       console.log("item: "+item);
       this.ctx.fillStyle = 'red';
       let temp: Array<Square> = new Array();
       squares.push(temp);
-      // drawing out the variable squares
+      // drawing out the array squares
       for(var i = 0; i < item[1]; i++)
       {
         squares[x][i] = new Square(this.ctx);
@@ -64,6 +65,17 @@ export class DrawComponent implements OnInit {
       this.ctx.fillText(item[0], 20, arrHeight*32);
       arrHeight+=2;
       x++;
+    });
+
+    // making the square objects for each variable
+    squares.push(new Array());
+    let i: number = 0;
+    variables.forEach(item => {
+      this.ctx.fillStyle = 'blue';
+      squares[x][i] = new Square(this.ctx);
+      squares[x][i].draw(1+i*2, arrHeight, 35, 20);
+      this.ctx.font = "15px Arial";
+      this.ctx.fillText(item, 20, arrHeight*32);
     });
   }
 
